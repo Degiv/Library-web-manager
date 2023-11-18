@@ -40,6 +40,12 @@ public class BookDAO {
                 .findAny().orElse(null);
     }
 
+    public Book getBook(String author, String title) {
+        return jdbcTemplate.query("SELECT * FROM Book WHERE author=? AND title=?",
+                        new Object[]{author, title}, new BeanPropertyRowMapper<>(Book.class)).stream()
+                .findAny().orElse(null);
+    }
+
     public void delete(int id) {
         jdbcTemplate.update("DELETE FROM Book WHERE book_id=?", id);
     }

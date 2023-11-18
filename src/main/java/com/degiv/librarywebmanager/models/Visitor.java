@@ -1,8 +1,17 @@
 package com.degiv.librarywebmanager.models;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
+
 public class Visitor {
     private int id;
+
+    @NotEmpty
     private String fullName;
+
+    @Pattern(regexp = "\\d{4}", message = "Wrong year format")
     private int yearOfBirth;
 
     public Visitor(int id, String fullName, int yearOfBirth) {

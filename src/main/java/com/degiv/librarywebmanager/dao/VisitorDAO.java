@@ -40,6 +40,12 @@ public class VisitorDAO {
                 .findAny().orElse(null);
     }
 
+    public Book getVisitor(String fullName) {
+        return jdbcTemplate.query("SELECT * FROM Visitor WHERE fulll_mame=?",
+                        new Object[]{fullName}, new BeanPropertyRowMapper<>(Book.class)).stream()
+                .findAny().orElse(null);
+    }
+
     public void delete(int id) {
         jdbcTemplate.update("DELETE FROM Visitor WHERE visitor_id=?", id);
     }

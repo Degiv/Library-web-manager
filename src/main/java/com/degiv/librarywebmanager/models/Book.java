@@ -1,9 +1,17 @@
 package com.degiv.librarywebmanager.models;
 
+import org.hibernate.validator.constraints.ParameterScriptAssert;
+
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
+
 public class Book {
     private int id;
+    @NotEmpty
     private String title;
+    @NotEmpty
     private String author;
+    @Pattern(regexp = "\\d{4}", message = "Wrong year format")
     private int year;
 
     public Book(int id, String title, String author, int year) {
