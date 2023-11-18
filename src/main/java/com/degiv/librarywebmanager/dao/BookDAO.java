@@ -6,7 +6,6 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -23,7 +22,7 @@ public class BookDAO {
     }
 
     public void create(Book book) {
-        jdbcTemplate.update("INSERT INTO Books(title, author, year) VALUES(?, ?, ?)",
+        jdbcTemplate.update("INSERT INTO Book(title, author, year) VALUES(?, ?, ?)",
                 book.getTitle(),
                 book.getAuthor(),
                 book.getYear());
