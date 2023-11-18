@@ -34,7 +34,7 @@ public class VisitorDAO {
                 visitor.getYearOfBirth(),
                 visitor.getId());
     }
-    public Visitor show(int id) {
+    public Visitor getVisitor(int id) {
         return jdbcTemplate.query("SELECT * FROM Visitor WHERE visitor_id=?",
                         new Object[]{id}, new BeanPropertyRowMapper<>(Visitor.class)).stream()
                 .findAny().orElse(null);
