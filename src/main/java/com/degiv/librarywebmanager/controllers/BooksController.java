@@ -2,6 +2,7 @@ package com.degiv.librarywebmanager.controllers;
 
 import com.degiv.librarywebmanager.dao.BookDAO;
 import com.degiv.librarywebmanager.models.Book;
+import com.degiv.librarywebmanager.models.Person;
 import com.degiv.librarywebmanager.util.BookValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,28 +13,27 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @Controller
-@RequestMapping("/book")
-public class BookController {
-    private BookDAO bookDAO;
-    private BookValidator bookValidator;
+@RequestMapping("/books")
+public class BooksController {
+    private final BookDAO bookDAO;
+    private final BookValidator bookValidator;
 
     @Autowired
-    public BookController(BookDAO bookDAO, BookValidator bookValidator) {
+    public BooksController(BookDAO bookDAO, BookValidator bookValidator) {
         this.bookDAO = bookDAO;
         this.bookValidator = bookValidator;
     }
 
-    @GetMapping
+    @GetMapping()
     public String index(Model model) {
         model.addAttribute("books", bookDAO.index());
-        return "book/index";
+        return "books/index";
     }
 
-    @GetMapping("/new")
-    public String createPage(@ModelAttribute("book") @Valid Book book) {
-        return "book/new";
+    @GetMapping("/create")
+    public String createPage(@ModelAttribute("book") Book book) {
+        return "books/create";
     }
-
     @PostMapping()
     public String create(@ModelAttribute("book") @Valid Book book, BindingResult bindingResult) {
         bookValidator.validate(book, bindingResult);

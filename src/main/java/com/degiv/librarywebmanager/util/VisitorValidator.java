@@ -25,7 +25,7 @@ public class VisitorValidator implements Validator {
     public void validate(Object o, Errors errors) {
         Visitor visitor = (Visitor) o;
         if (visitorDAO.getVisitor(visitor.getFullName()) != null) {
-            errors.rejectValue("fullName", "This visitor already exists");
+            errors.rejectValue("fullName", "", "This visitor already exists");
         }
     }
 }

@@ -1,6 +1,7 @@
 package com.degiv.librarywebmanager.models;
 
 import org.hibernate.validator.constraints.ParameterScriptAssert;
+import org.springframework.format.annotation.NumberFormat;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
@@ -11,9 +12,10 @@ public class Book {
     private String title;
     @NotEmpty
     private String author;
-    @Pattern(regexp = "\\d{4}", message = "Wrong year format")
+    @NumberFormat
     private int year;
 
+    public Book() { }
     public Book(int id, String title, String author, int year) {
         this.id = id;
         this.title = title;

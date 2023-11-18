@@ -14,6 +14,7 @@ public class Visitor {
     @Pattern(regexp = "\\d{4}", message = "Wrong year format")
     private int yearOfBirth;
 
+    public Visitor() { }
     public Visitor(int id, String fullName, int yearOfBirth) {
         this.id = id;
         this.fullName = fullName;

@@ -9,14 +9,16 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @Controller
 @RequestMapping("/visitors")
-public class VisitorController {
-    private VisitorDAO visitorDAO;
-    private VisitorValidator visitorValidator;
+public class VisitorsController {
+    private final VisitorDAO visitorDAO;
+    private final VisitorValidator visitorValidator;
 
     @Autowired
-    public VisitorController(VisitorDAO visitorDAO, VisitorValidator visitorValidator) {
+    public VisitorsController(VisitorDAO visitorDAO, VisitorValidator visitorValidator) {
         this.visitorDAO = visitorDAO;
         this.visitorValidator = visitorValidator;
     }
@@ -24,16 +26,16 @@ public class VisitorController {
     @GetMapping
     public String index(Model model) {
         model.addAttribute("visitors", visitorDAO.index());
-        return "visitor/index";
+        return "visitors/index";
     }
 
-    @GetMapping("/create")
+    @GetMapping("/new")
     public String createPage(@ModelAttribute("visitor") Visitor visitor) {
-        return "visitor/create";
+        return "visitors/create";
     }
 
     @PostMapping()
-    public String create(@ModelAttribute("visitor") Visitor visitor, BindingResult bindingResult) {
+    public String create(@ModelAttribute("visitor") @Valid Visitor visitor, BindingResult bindingResult) {
         visitorValidator.validate(visitor, bindingResult);
         if (bindingResult.hasErrors()) {
             return "visitors/create";
@@ -54,7 +56,7 @@ public class VisitorController {
         return "visitors/edit";
     }
     @PatchMapping("/{id}")
-    public String edit(@PathVariable("id") int id, @ModelAttribute Visitor visitor, BindingResult bindingResult) {
+    public String edit(@PathVariable("id") int id, @ModelAttribute @Valid Visitor visitor, BindingResult bindingResult) {
         visitorValidator.validate(visitor, bindingResult);
         if (bindingResult.hasErrors()) {
             return "/edit";
