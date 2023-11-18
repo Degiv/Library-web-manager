@@ -37,6 +37,9 @@ public class BookController {
     @PostMapping()
     public String create(@ModelAttribute("book") @Valid Book book, BindingResult bindingResult) {
         bookValidator.validate(book, bindingResult);
+        if (bindingResult.hasErrors()) {
+            return "books/create";
+        }
         bookDAO.create(book);
         return "redirect:/books";
     }
@@ -55,6 +58,9 @@ public class BookController {
     @PatchMapping("/{id}")
     public String edit(@PathVariable("id") int id, @ModelAttribute Book book, BindingResult bindingResult) {
         bookValidator.validate(book, bindingResult);
+        if (bindingResult.hasErrors()) {
+            return "books/edit";
+        }
         bookDAO.edit(book);
         return "redirect:/books";
     }
