@@ -7,7 +7,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 
 public class Book {
-    private int id;
+    private int book_id;
     @NotEmpty
     private String title;
     @NotEmpty
@@ -17,18 +17,18 @@ public class Book {
 
     public Book() { }
     public Book(int id, String title, String author, int year) {
-        this.id = id;
+        this.book_id = book_id;
         this.title = title;
         this.author = author;
         this.year = year;
     }
 
-    public int getId() {
-        return id;
+    public int getBook_id() {
+        return book_id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setBook_id(int book_id) {
+        this.book_id = book_id;
     }
 
     public String getTitle() {

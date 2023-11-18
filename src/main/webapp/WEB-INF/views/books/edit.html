@@ -7,17 +7,22 @@
 <body>
 <form th:method="PATCH" th:action="@{/books}" th:object="${book}">
     <label for="title" th:text="Title"></label>
-    <input id="title" th:field="*{title}" th:text="${book.getTitle()}"/>
+    <input id="title" th:field="*{title}"/>
     <div style="color:red" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
     <br/>
     <label for="author" th:text="Author"></label>
-    <input id="author" th:field="*{author}" th:text="${book.getAuthor()}"/>
+    <input id="author" th:field="*{author}"/>
     <div style="color:red" th:if="${#fields.hasErrors('author')}" th:errors="*{author}"></div>
     <br/>
-    <label for="year" th:text="year"></label>
-    <input id="year" th:field="*{year}" th:text="${book.getYear()}"/>
+    <label for="year" th:text="Year"></label>
+    <input id="year" th:field="*{year}"/>
     <div style="color:red" th:if="${#fields.hasErrors('year')}" th:errors="*{year}"></div>
+    <br/>
     <input type="submit" value="Edit!">
+</form>
+<br/>
+<form th:method="GET" th:action="@{/books}">
+    <input type="submit" value="Back to list"/>
 </form>
 </body>
 </html>

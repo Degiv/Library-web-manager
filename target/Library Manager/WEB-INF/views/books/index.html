@@ -6,10 +6,11 @@
 </head>
 <body>
 <div th:each="book : ${books}">
-    <a th:href="@{/books/{id}(id=${book.getId()})}"
-       th:text="'&quot' + ${book.getTitle()} + '&quot,  ' + ${book.getAuthor()} + ', ' + ${book.getYear()}">user</a>
+    <a th:href="@{/books/{id}(id=${book.getBook_id()})}"
+       th:text="'&quot' + ${book.getTitle()} + '&quot  ' + ${book.getAuthor()} + ' ' + ${book.getYear()}">user</a>
 </div>
 <br/>
+<hr/>
 <form th:method="GET" th:action="@{/books/create}">
     <input type="submit" value="New book"/>
 </form>

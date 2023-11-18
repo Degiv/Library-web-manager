@@ -32,7 +32,7 @@ public class VisitorDAO {
         jdbcTemplate.update("UPDATE Visitor SET full_name=?, year_of_birth=? WHERE visitor_id=?",
                 visitor.getFullName(),
                 visitor.getYearOfBirth(),
-                visitor.getId());
+                visitor.getVisitor_id());
     }
     public Visitor getVisitor(int id) {
         return jdbcTemplate.query("SELECT * FROM Visitor WHERE visitor_id=?",

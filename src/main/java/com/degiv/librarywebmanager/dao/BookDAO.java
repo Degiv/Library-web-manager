@@ -18,7 +18,7 @@ public class BookDAO {
     }
 
     public List<Book> index() {
-        return jdbcTemplate.query("SELECT * FROM BOOK", new BeanPropertyRowMapper<>(Book.class));
+        return jdbcTemplate.query("SELECT * FROM Book", new BookMapper());
     }
 
     public void create(Book book) {
@@ -32,17 +32,21 @@ public class BookDAO {
                 book.getTitle(),
                 book.getAuthor(),
                 book.getYear(),
-                book.getId());
+                book.getBook_id());
     }
     public Book getBook(int id) {
+        Book book = jdbcTemplate.query("SELECT * FROM Book WHERE book_id=?",
+                        new Object[]{id}, new BookMapper()).stream()
+                .findAny().orElse(null);
+
         return jdbcTemplate.query("SELECT * FROM Book WHERE book_id=?",
-                new Object[]{id}, new BeanPropertyRowMapper<>(Book.class)).stream()
+                new Object[]{id}, new BookMapper()).stream()
                 .findAny().orElse(null);
     }
 
     public Book getBook(String author, String title) {
         return jdbcTemplate.query("SELECT * FROM Book WHERE author=? AND title=?",
-                        new Object[]{author, title}, new BeanPropertyRowMapper<>(Book.class)).stream()
+                        new Object[]{author, title}, new BookMapper()).stream()
                 .findAny().orElse(null);
     }
 

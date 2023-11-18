@@ -6,7 +6,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 
 public class Visitor {
-    private int id;
+    private int visitor_id;
 
     @NotEmpty
     private String fullName;
@@ -15,18 +15,18 @@ public class Visitor {
     private int yearOfBirth;
 
     public Visitor() { }
-    public Visitor(int id, String fullName, int yearOfBirth) {
-        this.id = id;
+    public Visitor(int visitor_id, String fullName, int yearOfBirth) {
+        this.visitor_id =visitor_id;
         this.fullName = fullName;
         this.yearOfBirth = yearOfBirth;
     }
 
-    public int getId() {
-        return id;
+    public int getVisitor_id() {
+        return visitor_id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setVisitor_id(int visitor_id) {
+        this.visitor_id = visitor_id;
     }
 
     public String getFullName() {
