@@ -34,7 +34,7 @@ public class BookDAO {
                 book.getYear(),
                 book.getId());
     }
-    public Book show(int id) {
+    public Book getBook(int id) {
         return jdbcTemplate.query("SELECT * FROM Book WHERE book_id=?",
                 new Object[]{id}, new BeanPropertyRowMapper<>(Book.class)).stream()
                 .findAny().orElse(null);
