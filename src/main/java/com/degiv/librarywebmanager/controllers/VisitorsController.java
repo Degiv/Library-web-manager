@@ -29,7 +29,7 @@ public class VisitorsController {
         return "visitors/index";
     }
 
-    @GetMapping("/new")
+    @GetMapping("/create")
     public String createPage(@ModelAttribute("visitor") Visitor visitor) {
         return "visitors/create";
     }
@@ -53,15 +53,15 @@ public class VisitorsController {
     @GetMapping("/{id}/edit")
     public String editPage(@PathVariable("id") int id, Model model) {
         model.addAttribute("visitor", visitorDAO.getVisitor(id));
+        System.out.println(visitorDAO.getVisitor(id).getFullName());
         return "visitors/edit";
     }
     @PatchMapping("/{id}")
     public String edit(@PathVariable("id") int id, @ModelAttribute @Valid Visitor visitor, BindingResult bindingResult) {
-        visitorValidator.validate(visitor, bindingResult);
         if (bindingResult.hasErrors()) {
             return "/edit";
         }
-        visitorDAO.edit(visitor);
+        visitorDAO.edit(visitor, id);
         return "redirect:/visitors";
     }
 

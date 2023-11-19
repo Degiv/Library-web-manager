@@ -2,7 +2,6 @@ package com.degiv.librarywebmanager.controllers;
 
 import com.degiv.librarywebmanager.dao.BookDAO;
 import com.degiv.librarywebmanager.models.Book;
-import com.degiv.librarywebmanager.models.Person;
 import com.degiv.librarywebmanager.util.BookValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -57,12 +56,11 @@ public class BooksController {
         return "books/edit";
     }
     @PatchMapping("/{id}")
-    public String edit(@PathVariable("id") int id, @ModelAttribute Book book, BindingResult bindingResult) {
-        bookValidator.validate(book, bindingResult);
+    public String edit(@PathVariable("id") int id, @ModelAttribute @Valid Book book, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "books/edit";
         }
-        bookDAO.edit(book);
+        bookDAO.edit(book, id);
         return "redirect:/books";
     }
 

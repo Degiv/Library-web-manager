@@ -2,9 +2,23 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Edit visitor</title>
+    <title>Edit Visitor</title>
 </head>
 <body>
-
+<form th:method="PATCH" th:action="@{/visitors/{id}(id=${visitor.getVisitor_id()})}" th:object="${visitor}">
+    <label for="fullName" th:text="'Full name'"></label>
+    <input id="fullName" th:field="*{fullName}"/>
+    <div style="color:red" th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}"></div>
+    <br/>
+    <label for="yearOfBirth" th:text="'Year of birth'"></label>
+    <input id="yearOfBirth" th:field="*{yearOfBirth}"/>
+    <div style="color:red" th:if="${#fields.hasErrors('yearOfBirth')}" th:errors="*{yearOfBirth}"></div>
+    <br/>
+    <input type="submit" value="Edit!">
+</form>
+<br/>
+<form th:method="GET" th:action="@{/visitors}">
+    <input type="submit" value="Back to list"/>
+</form>
 </body>
 </html>

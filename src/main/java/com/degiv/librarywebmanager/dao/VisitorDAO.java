@@ -20,29 +20,29 @@ public class VisitorDAO {
     }
 
     public List<Visitor> index() {
-        return jdbcTemplate.query("SELECT * FROM Visitor", new BeanPropertyRowMapper<>(Visitor.class));
+        return jdbcTemplate.query("SELECT * FROM Visitor", new VisitorMapper());
     }
 
     public void create(Visitor visitor) {
-        jdbcTemplate.update("INSERT INTO (full_name, year_of_birth) VALUES(?)",
+        jdbcTemplate.update("INSERT INTO Visitor(full_name, year_of_birth) VALUES(?, ?)",
                 visitor.getFullName(),
                 visitor.getYearOfBirth());
     }
-    public void edit(Visitor visitor) {
+    public void edit(Visitor visitor, int id) {
         jdbcTemplate.update("UPDATE Visitor SET full_name=?, year_of_birth=? WHERE visitor_id=?",
                 visitor.getFullName(),
                 visitor.getYearOfBirth(),
-                visitor.getVisitor_id());
+                id);
     }
     public Visitor getVisitor(int id) {
         return jdbcTemplate.query("SELECT * FROM Visitor WHERE visitor_id=?",
-                        new Object[]{id}, new BeanPropertyRowMapper<>(Visitor.class)).stream()
+                        new Object[]{id}, new VisitorMapper()).stream()
                 .findAny().orElse(null);
     }
 
-    public Book getVisitor(String fullName) {
-        return jdbcTemplate.query("SELECT * FROM Visitor WHERE fulll_mame=?",
-                        new Object[]{fullName}, new BeanPropertyRowMapper<>(Book.class)).stream()
+    public Visitor getVisitor(String fullName) {
+        return jdbcTemplate.query("SELECT * FROM Visitor WHERE full_name=?",
+                        new Object[]{fullName}, new VisitorMapper()).stream()
                 .findAny().orElse(null);
     }
 

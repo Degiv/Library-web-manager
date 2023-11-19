@@ -27,12 +27,12 @@ public class BookDAO {
                 book.getAuthor(),
                 book.getYear());
     }
-    public void edit(Book book) {
+    public void edit(Book book, int id) {
         jdbcTemplate.update("UPDATE Book SET title=?, author=?, year=? WHERE book_id=?",
                 book.getTitle(),
                 book.getAuthor(),
                 book.getYear(),
-                book.getBook_id());
+                id);
     }
     public Book getBook(int id) {
         Book book = jdbcTemplate.query("SELECT * FROM Book WHERE book_id=?",
