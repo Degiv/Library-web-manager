@@ -1,7 +1,9 @@
 package com.degiv.librarywebmanager.controllers;
 
 import com.degiv.librarywebmanager.dao.BookDAO;
+import com.degiv.librarywebmanager.dao.VisitorDAO;
 import com.degiv.librarywebmanager.models.Book;
+import com.degiv.librarywebmanager.models.Visitor;
 import com.degiv.librarywebmanager.util.BookValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,11 +17,13 @@ import javax.validation.Valid;
 @RequestMapping("/books")
 public class BooksController {
     private final BookDAO bookDAO;
+    private final VisitorDAO visitorDAO;
     private final BookValidator bookValidator;
 
     @Autowired
-    public BooksController(BookDAO bookDAO, BookValidator bookValidator) {
+    public BooksController(BookDAO bookDAO, VisitorDAO visitorDAO, BookValidator bookValidator) {
         this.bookDAO = bookDAO;
+        this.visitorDAO = visitorDAO;
         this.bookValidator = bookValidator;
     }
 
@@ -45,8 +49,11 @@ public class BooksController {
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model) {
-        model.addAttribute("book", bookDAO.getBook(id));
-        System.out.println(id + bookDAO.getBook(id).getTitle() + ", " + bookDAO.getBook(id).getAuthor());
+        Book book = bookDAO.getBook(id);
+        model.addAttribute("book", book);
+        model.addAttribute("owner", visitorDAO.getVisitor(bookDAO.getVisitorIdByBookId(id)));
+        model.addAttribute("newOwner", new Visitor());
+        model.addAttribute("visitors", visitorDAO.index());
         return "books/show";
     }
 
@@ -68,5 +75,17 @@ public class BooksController {
     public String delete(@PathVariable("id") int id) {
         bookDAO.delete(id);
         return "redirect:/books";
+    }
+
+    @PatchMapping("/{id}/free")
+    public String freeBook(@PathVariable("id") int id) {
+        bookDAO.freeBook(id);
+        return "redirect:/books/" + id;
+    }
+
+    @PatchMapping("/{id}/setOwner")
+    public String setOwner(@ModelAttribute("newOwner") Visitor newOwner, @PathVariable("id") int id) {
+        bookDAO.setOwner(id, newOwner.getVisitor_id());
+        return "redirect:/books/" + id;
     }
 }

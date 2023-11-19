@@ -1,5 +1,6 @@
 package com.degiv.librarywebmanager.controllers;
 
+import com.degiv.librarywebmanager.dao.BookDAO;
 import com.degiv.librarywebmanager.dao.VisitorDAO;
 import com.degiv.librarywebmanager.models.Visitor;
 import com.degiv.librarywebmanager.util.VisitorValidator;
@@ -15,11 +16,13 @@ import javax.validation.Valid;
 @RequestMapping("/visitors")
 public class VisitorsController {
     private final VisitorDAO visitorDAO;
+    private final BookDAO bookDAO;
     private final VisitorValidator visitorValidator;
 
     @Autowired
-    public VisitorsController(VisitorDAO visitorDAO, VisitorValidator visitorValidator) {
+    public VisitorsController(VisitorDAO visitorDAO, BookDAO bookDAO, VisitorValidator visitorValidator) {
         this.visitorDAO = visitorDAO;
+        this.bookDAO = bookDAO;
         this.visitorValidator = visitorValidator;
     }
 
@@ -47,6 +50,7 @@ public class VisitorsController {
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model) {
         model.addAttribute("visitor", visitorDAO.getVisitor(id));
+        model.addAttribute("takenBooks", bookDAO.getBooksByVisitorId(id));
         return "visitors/show";
     }
 

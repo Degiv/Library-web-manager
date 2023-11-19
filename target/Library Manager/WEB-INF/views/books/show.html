@@ -7,6 +7,25 @@
 <body>
 <div th:text="'&quot' + ${book.getTitle()} + '&quot, ' + ${book.getAuthor()} + ', ' + ${book.getYear()}"></div>
 <br/>
+<div th:if="${owner != null}">
+    <div th:text="'Taken by '"></div>
+    <p th:text="${owner.getFullName()} + ', ' + ${owner.getYearOfBirth()}"></p>
+    <br/>
+    <form th:method="PATCH" th:action="@{{id}/free(id=${book.getBook_id()})}">
+        <input type="submit" th:value="'Remove owner'"/>
+    </form>
+</div>
+<div th:if="${owner == null}">
+    <div th:text="'Not taken'"></div>
+    <form th:method="PATCH" th:action="@{{id}/setOwner(id=${book.getBook_id()})}">
+        <label for="newOwner" th:text="'You can choose new owner here'"></label>
+        <select th:object="${newOwner}" th:field="*{visitor_id}" id="newOwner">
+            <option th:each="visitor : ${visitors}" th:value="${visitor.getVisitor_id()}" th:text="${visitor.getFullName()} + ', ' + ${visitor.getYearOfBirth()}"></option>
+        </select>
+        <input type="submit" th:value="'Make owner!'">
+    </form>
+</div>
+<br/>
 <hr/>
 <form th:method="GET" th:action="@{/books}">
     <input type="submit" value="Back to list"/>
